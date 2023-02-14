@@ -1,8 +1,8 @@
-import { defineStore } from "pinia";
-import Gleap from "gleap";
+import { defineStore } from 'pinia';
+import Gleap from 'gleap';
 
-import api from "../api";
-import { useRequestsStore } from "./requests";
+import api from '../api';
+import { useRequestsStore } from './requests';
 import {
   User,
   UserTypeEnum,
@@ -10,16 +10,16 @@ import {
   BusinessProfile,
   CompletePasswordResetRequest,
   UserTypeUpdateRequest,
-} from "../types";
+} from '../types';
 
-export const useAuthStore = defineStore("auth", {
+export const useAuthStore = defineStore('auth', {
   state: () => {
     return {
       form: {
-        email: "",
-        password: "",
+        email: '',
+        password: '',
       },
-      token: "",
+      token: '',
       user: {
         type: UserTypeEnum.FREELANCER,
       } as User,
@@ -127,8 +127,8 @@ export const useAuthStore = defineStore("auth", {
         maxAge,
         expires,
       };
-      useCookie("token", options).value = this.token;
-      useCookie<User>("user", options).value = this.user;
+      useCookie('token', options).value = this.token;
+      useCookie<User>('user', options).value = this.user;
 
       Gleap.identify(this.user.email, {
         email: this.user.email,
@@ -180,12 +180,12 @@ export const useAuthStore = defineStore("auth", {
         expires,
       };
 
-      useCookie<any>("token", options).value = "";
-      useCookie<any>("user", options).value = "";
+      useCookie<any>('token', options).value = '';
+      useCookie<any>('user', options).value = '';
 
       Gleap.clearIdentity();
 
-      window.location.href = window.location.origin + "/sign-in";
+      window.location.href = window.location.origin + '/sign-in';
     },
 
     async initatePasswordReset() {
@@ -253,7 +253,7 @@ export const useAuthStore = defineStore("auth", {
       try {
         const res = await api.getUserDetails();
         this.user = res.data as any;
-        useCookie<User>("user").value = this.user;
+        useCookie<User>('user').value = this.user;
 
         return res;
       } finally {

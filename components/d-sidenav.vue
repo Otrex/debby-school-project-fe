@@ -129,25 +129,25 @@
           aria-label="Sidebar"
         >
           <div class="px-2 space-y-1">
-            <NuxtLink
-              v-for="item in navigation"
-              :key="item.name"
-              :to="item.href"
-              :active-class="'bg-slate-800 text-white'"
-              :exact-active-class="'bg-slate-800 text-white'"
-              :class="[
-                'text-slate-100 hover:text-white hover:bg-slate-600',
-                'group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md',
-              ]"
-              :aria-current="item.current ? 'page' : undefined"
-            >
-              <component
-                :is="item.icon"
-                class="flex-shrink-0 w-6 h-6 mr-4 text-slate-200"
-                aria-hidden="true"
-              />
-              {{ item.name }}
-            </NuxtLink>
+            <template v-for="item in navigation" :key="item.name">
+              <NuxtLink
+                :to="item.href"
+                :active-class="'bg-slate-800 text-white'"
+                :exact-active-class="'bg-slate-800 text-white'"
+                :class="[
+                  'text-slate-100 hover:text-white hover:bg-slate-600',
+                  'group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md',
+                ]"
+                :aria-current="item.current ? 'page' : undefined"
+              >
+                <component
+                  :is="item.icon"
+                  class="flex-shrink-0 w-6 h-6 mr-4 text-slate-200"
+                  aria-hidden="true"
+                />
+                {{ item.name }}
+              </NuxtLink>
+            </template>
           </div>
           <div class="pt-6 mt-6">
             <div class="px-2 space-y-1">
@@ -205,13 +205,39 @@ import {
   ChevronRightIcon,
   MagnifyingGlassIcon,
 } from '@heroicons/vue/20/solid';
+import c from '~~/composables/useLocalStorage';
+
+console.log(c.useLocalStorage);
+const userLocalStorage = ref();
+
+onMounted(() => {
+  userLocalStorage.value = c.useLocalStorage('user');
+});
 
 const navigation = ref([
   { name: 'Home', href: './', icon: HomeIcon, current: true },
   { name: 'History', href: './history', icon: ClockIcon, current: false },
-  { name: 'Balances', href: './balance', icon: ScaleIcon, current: false },
-  { name: 'Students', href: './student', icon: UserGroupIcon, current: false },
-  // { name: 'Reports', href: '#', icon: DocumentChartBarIcon, current: false },
+  {
+    name: 'Balances',
+    href: './balance',
+    icon: ScaleIcon,
+    current: false,
+    type: 'admin',
+  },
+  {
+    name: 'Students',
+    href: './student',
+    icon: UserGroupIcon,
+    current: false,
+    type: 'admin',
+  },
+  {
+    name: 'Make Payment',
+    href: './make-payment',
+    icon: DocumentChartBarIcon,
+    current: false,
+    type: 'student',
+  },
 ]);
 const secondaryNavigation = [
   { name: 'Settings', href: '#', icon: CogIcon },
@@ -227,10 +253,10 @@ const props = defineProps({
   },
 });
 
-function setActive (item) {
+function setActive(item) {
   console.log(item);
   const activeItem = navigation.value.findIndex((i) => i.name === item.name);
-  if (activeItem == -1) return navigation.value[0].current = true;
+  if (activeItem == -1) return (navigation.value[0].current = true);
   navigation.value[activeItem].current = true;
 }
 </script>

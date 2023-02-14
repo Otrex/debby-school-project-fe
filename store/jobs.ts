@@ -1,15 +1,15 @@
-import { defineStore } from "pinia";
+import { defineStore } from 'pinia';
 
-import api from "../api";
-import { useRequestsStore } from "./requests";
+import api from '../api';
+import { useRequestsStore } from './requests';
 import {
   IBusinessJob,
   IOngoingJob,
   IProposalDetail,
   IPublishedJobs,
-} from "../types";
+} from '../types';
 
-export const useJobStore = defineStore("jobs", {
+export const useJobStore = defineStore('jobs', {
   state: () => {
     return {
       publishedJobs: [] as IPublishedJobs[],
@@ -44,10 +44,9 @@ export const useJobStore = defineStore("jobs", {
       const endRequest = requestsStore.startRequest();
       try {
         const res = await api.fetchHiredJobs(status);
-        if(status === 'completed') {
+        if (status === 'completed') {
           this.completedJobs = res.data;
-        }
-        else this.hiredJobs = res.data;
+        } else this.hiredJobs = res.data;
       } finally {
         endRequest();
       }
@@ -123,7 +122,7 @@ export const useJobStore = defineStore("jobs", {
       const endRequest = requestsStore.startRequest();
       try {
         const res = await api.getJobs();
-        console.log("res");
+        console.log('res');
         console.log(res.data.length);
         console.log(JSON.stringify(res.data));
         this.allJobs = [...res.data];
@@ -165,7 +164,7 @@ export const useJobStore = defineStore("jobs", {
       const requestsStore = useRequestsStore();
       const endRequest = requestsStore.startRequest();
       try {
-        const res = await api.inviteAFreelancer(jobId, freelancerId, "");
+        const res = await api.inviteAFreelancer(jobId, freelancerId, '');
       } finally {
         endRequest();
       }

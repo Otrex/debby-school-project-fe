@@ -14,8 +14,8 @@ export interface User {
 }
 
 export enum UserTypeEnum {
-  ADMIN = "admin",
-  STUDENT = "student",
+  ADMIN = 'admin',
+  STUDENT = 'student',
 }
 
 export interface RegisterRequest {
@@ -47,12 +47,12 @@ export interface LoginResponse {
 }
 
 export interface UserTypeUpdateRequest {
-  type: Exclude<UserTypeEnum, 'none'>
+  type: Exclude<UserTypeEnum, 'none'>;
 }
 
 export interface UserTypeUpdateResponse {
   status: string;
-  message:string;
+  message: string;
 }
 
 export interface InitiatePasswordResetRequest {
@@ -65,10 +65,9 @@ export interface CompletePasswordResetRequest {
   token: string;
 }
 
-
 export interface InitiateEmailVerificationResponse {
   status: string;
   data: {
-    resendDelaySeconds: number
+    resendDelaySeconds: number;
   };
 }

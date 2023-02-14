@@ -1,4 +1,4 @@
-import axios, { Axios, Method, AxiosError } from "axios";
+import axios, { Axios, Method, AxiosError } from 'axios';
 import {
   LoginRequest,
   LoginResponse,
@@ -6,8 +6,7 @@ import {
   RegisterResponse,
   UserTypeUpdateRequest,
   UserTypeUpdateResponse,
-} from "../types";
-
+} from '../types';
 
 class Api {
   private instance: Axios;
@@ -26,7 +25,7 @@ class Api {
   public setToken(token: string) {
     this.token = token;
     this.instance.defaults.headers.common[
-      "Authorization"
+      'Authorization'
     ] = `Bearer ${this.token}`;
   }
 
@@ -37,7 +36,7 @@ class Api {
   ) {
     try {
       let _url = url;
-      if (method.toLowerCase() === "get" && data) {
+      if (method.toLowerCase() === 'get' && data) {
         const params = new URLSearchParams(data);
         _url += `?${params.toString()}`;
       }
@@ -48,7 +47,7 @@ class Api {
         data,
       });
 
-      if (res.data.status === "success") {
+      if (res.data.status === 'success') {
         return res.data;
       }
 
@@ -57,7 +56,7 @@ class Api {
       const error = e as AxiosError;
       if (error.response) {
         if (error.response.status === 401) {
-          navigateTo("/");
+          navigateTo('/');
         }
         return Promise.reject(error.response.data);
       }
@@ -65,22 +64,21 @@ class Api {
     }
   }
 
-
   /*
    * Authentication
    * */
   register(data: RegisterRequest) {
-    return this.request<RegisterResponse>("post", "/auth/register", {
+    return this.request<RegisterResponse>('post', '/auth/register', {
       ...data,
     });
   }
 
   login(data: LoginRequest) {
-    return this.request<LoginResponse>("post", "/auth/login", { ...data });
+    return this.request<LoginResponse>('post', '/auth/login', { ...data });
   }
 
   setUserType(data: UserTypeUpdateRequest) {
-    return this.request<UserTypeUpdateResponse>("patch", "/user/type", data);
+    return this.request<UserTypeUpdateResponse>('patch', '/user/type', data);
   }
 }
 

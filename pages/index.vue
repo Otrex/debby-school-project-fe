@@ -110,14 +110,12 @@ async function login() {
   try {
     const res = await api.login({
       email: form.email,
-      password: form.password
-    })
+      password: form.password,
+    });
 
     console.log(res);
-  } catch (error) {
-    
-  }
-  
+  } catch (error) {}
+
   router.push('/dashboard');
 }
 </script>

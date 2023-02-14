@@ -1,7 +1,7 @@
-import { defineStore } from "pinia";
-import { v4 as uuidv4 } from "uuid";
+import { defineStore } from 'pinia';
+import { v4 as uuidv4 } from 'uuid';
 
-export const useRequestsStore = defineStore("requests", {
+export const useRequestsStore = defineStore('requests', {
   state: () => {
     return {
       requests: new Set<string>(),

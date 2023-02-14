@@ -1,45 +1,45 @@
 import { UserTypeEnum } from './../types/enums/index';
 import { useAuthStore } from './auth';
 import { IMessage, MessageContentType } from './../types/models/index';
-import { defineStore } from "pinia";
+import { defineStore } from 'pinia';
 import { useWebSocket } from '@vueuse/core';
 
-import api from "../api";
+import api from '../api';
 export enum WSActionEnum {
   SEND_MESSAGE = 'create:message',
-  SUBSCRIBE = "subscribe"
+  SUBSCRIBE = 'subscribe',
 }
 
-type WSMessage = { type: string, message: IMessage| any };
+type WSMessage = { type: string; message: IMessage | any };
 type MessageRequest = {
-  content: string,
-  contentType: MessageContentType.TEXT,
-  conversation: string,
-  flag?: string
-}
+  content: string;
+  contentType: MessageContentType.TEXT;
+  conversation: string;
+  flag?: string;
+};
 type StoreState = {
   me?: string;
-  close: boolean,
-  popup: boolean,
-  title?: string,
-  loading: boolean,
-  client?: WebSocket,
-  unreadMessage: number,
-  conversationId?: string,
-  userType?: UserTypeEnum,
-  messages: IMessage[],
-  messageEl: any
-  name: string
-  hasInvitedAdmin: boolean,
-}
+  close: boolean;
+  popup: boolean;
+  title?: string;
+  loading: boolean;
+  client?: WebSocket;
+  unreadMessage: number;
+  conversationId?: string;
+  userType?: UserTypeEnum;
+  messages: IMessage[];
+  messageEl: any;
+  name: string;
+  hasInvitedAdmin: boolean;
+};
 
 export enum SendMessageType {
-  RECIEVED = "recieved",
-  SENT = "sent",
-  ERROR = "error",
+  RECIEVED = 'recieved',
+  SENT = 'sent',
+  ERROR = 'error',
 }
 
-export const useMessagingStore = defineStore("messaging", {
+export const useMessagingStore = defineStore('messaging', {
   state: (): StoreState => {
     return {
       me: undefined,
@@ -89,10 +89,10 @@ export const useMessagingStore = defineStore("messaging", {
         this.me = auth.user._id;
         this.userType = auth.user.type;
         await this.getPreviousMessages();
-        
+
         this.close = false;
       } finally {
-        this.loading = false
+        this.loading = false;
       }
     },
 
@@ -104,10 +104,12 @@ export const useMessagingStore = defineStore("messaging", {
 
         onConnected: (ws) => {
           this.client = ws;
-          ws.send(JSON.stringify({
-            action: WSActionEnum.SUBSCRIBE,
-            payload: { token: auth.token }
-          }))
+          ws.send(
+            JSON.stringify({
+              action: WSActionEnum.SUBSCRIBE,
+              payload: { token: auth.token },
+            })
+          );
           console.log({
             message: 'ws connection successful',
             timestamp: new Date(),
@@ -117,7 +119,7 @@ export const useMessagingStore = defineStore("messaging", {
           const payload = JSON.parse(event.data.toString()) as WSMessage;
           switch (payload.type) {
             case SendMessageType.ERROR:
-              console.log(payload.message)
+              console.log(payload.message);
               break;
 
             case SendMessageType.RECIEVED:
@@ -129,14 +131,16 @@ export const useMessagingStore = defineStore("messaging", {
 
             case SendMessageType.SENT:
               const message: IMessage = payload.message;
-              const idx = this.messages.findIndex(m => m.content === message.content);
+              const idx = this.messages.findIndex(
+                (m) => m.content === message.content
+              );
               this.messages[idx] = message;
               break;
-          
+
             default:
               break;
           }
-          this.scrollToBottom()
+          this.scrollToBottom();
         },
         onDisconnected: (ws) => {
           console.log({
@@ -144,14 +148,14 @@ export const useMessagingStore = defineStore("messaging", {
             timestamp: new Date(),
           });
           this.client = undefined;
-        }
+        },
       });
     },
 
-    scrollToBottom () {
+    scrollToBottom() {
       this.messageEl?.scroll({
         top: this.messageEl?.scrollHeight,
-        behavior: 'smooth'
+        behavior: 'smooth',
       });
     },
 
@@ -161,7 +165,7 @@ export const useMessagingStore = defineStore("messaging", {
         this.clearState();
         await api.connectToMessaging();
       } finally {
-        this.loading = false
+        this.loading = false;
       }
     },
 
@@ -170,7 +174,7 @@ export const useMessagingStore = defineStore("messaging", {
         this.clearState();
         this.loading = true;
         if (!this.conversationId && conversationId) {
-          this.conversationId = conversationId
+          this.conversationId = conversationId;
         }
         console.log('id', this.conversationId);
         const res = await api.getPreviousMessaging(this.conversationId!);
@@ -180,11 +184,11 @@ export const useMessagingStore = defineStore("messaging", {
       }
     },
 
-    async inviteAdmin(conversationId?: string){
+    async inviteAdmin(conversationId?: string) {
       try {
         this.loading = true;
         if (!this.conversationId && conversationId) {
-          this.conversationId = conversationId
+          this.conversationId = conversationId;
         }
         console.log('id', this.conversationId);
         await this.checkIfAdminIsInvited();
@@ -200,17 +204,19 @@ export const useMessagingStore = defineStore("messaging", {
         const msgRequest = {
           ...message,
           conversation: this.conversationId,
-          sender: this.me
+          sender: this.me,
         };
-        
-        this.client?.send(JSON.stringify({
-          action: WSActionEnum.SEND_MESSAGE,
-          payload: msgRequest
-        }))
-        
+
+        this.client?.send(
+          JSON.stringify({
+            action: WSActionEnum.SEND_MESSAGE,
+            payload: msgRequest,
+          })
+        );
+
         this.messages.push(msgRequest as any);
       } catch (err) {
-        console.log('message could not be sent')
+        console.log('message could not be sent');
       } finally {
         this.loading = false;
         // console.log(this.messages);
@@ -218,10 +224,10 @@ export const useMessagingStore = defineStore("messaging", {
     },
 
     async checkIfAdminIsInvited() {
-      console.log("calling...");
+      console.log('calling...');
       if (!this.conversationId) {
         // TODO throw conversation error
-        return
+        return;
       }
       try {
         this.loading = true;
@@ -232,6 +238,6 @@ export const useMessagingStore = defineStore("messaging", {
       } finally {
         this.loading = false;
       }
-    }
+    },
   },
 });

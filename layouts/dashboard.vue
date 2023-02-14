@@ -4,7 +4,7 @@
     <div class="flex flex-col flex-1 lg:pl-64">
       <d-topnav :sidebar-open="sidebarOpen" @toggle-sidebar="toggleSidebar" />
       <main class="flex-1 pb-8">
-        <slot/>
+        <slot />
       </main>
     </div>
   </div>
@@ -18,5 +18,4 @@ const sidebarOpen = ref(false);
 function toggleSidebar(key) {
   sidebarOpen.value = key;
 }
-
 </script>

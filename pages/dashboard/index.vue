@@ -318,21 +318,25 @@ import {
   UserGroupIcon,
   XMarkIcon,
 } from '@heroicons/vue/24/outline';
-import { statusStyles } from "../../utils";
+import { statusStyles } from '../../utils';
 
 definePageMeta({
   layout: 'dashboard',
 });
 
 const cards = [
-  { name: 'Account balance', href: '#', icon: ScaleIcon, amount: '$30,659.45' },
+  {
+    name: 'Account balance',
+    href: '#',
+    icon: ScaleIcon,
+    amount: '30,659.45 ETH',
+  },
   // More items...
 ];
 
 function salute() {
   const currentTime = new Date();
   const hour = currentTime.getHours();
-
 
   if (hour >= 5 && hour < 12) {
     return 'morning';
@@ -341,7 +345,6 @@ function salute() {
   } else {
     return 'evening';
   }
-
 }
 
 const transactions = [
@@ -349,13 +352,12 @@ const transactions = [
     id: 1,
     name: 'Payment to Molly Sanders',
     href: '#',
-    amount: '$20,000',
-    currency: 'USD',
+    amount: '20,000 ETH',
+    currency: 'Ethereum',
     status: 'success',
     date: 'July 11, 2020',
     datetime: '2020-07-11',
   },
   // More transactions...
 ];
-
 </script>

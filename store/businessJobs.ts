@@ -1,10 +1,10 @@
-import { defineStore } from "pinia";
+import { defineStore } from 'pinia';
 
-import api from "../api";
-import { useRequestsStore } from "./requests";
-import { IBusinessJob, IProposalDetail, IPublishedJobs } from "../types";
+import api from '../api';
+import { useRequestsStore } from './requests';
+import { IBusinessJob, IProposalDetail, IPublishedJobs } from '../types';
 
-export const useBusinessJobsStore = defineStore("business-jobs", {
+export const useBusinessJobsStore = defineStore('business-jobs', {
   state: () => ({
     loadingMyJobs: true,
     myJobs: [] as IBusinessJob[],

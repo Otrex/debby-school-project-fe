@@ -1,5 +1,5 @@
 <template>
-  <div> 
+  <div>
     <h2
       class="px-4 mx-auto mt-8 text-2xl font-medium leading-6 text-gray-900 max-w-7xl sm:px-6 lg:px-8"
     >
@@ -191,8 +191,8 @@
   </div>
 </template>
 <script setup>
-import { statusStyles } from "../../utils";
-import { BanknotesIcon } from "@heroicons/vue/20/solid";
+import { statusStyles } from '../../utils';
+import { BanknotesIcon } from '@heroicons/vue/20/solid';
 
 definePageMeta({
   layout: 'dashboard',
@@ -211,5 +211,4 @@ const transactions = [
   },
   // More transactions...
 ];
-
 </script>

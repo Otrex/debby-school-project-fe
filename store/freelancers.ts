@@ -1,10 +1,10 @@
-import { defineStore } from "pinia";
+import { defineStore } from 'pinia';
 
-import api from "../api";
-import { useRequestsStore } from "./requests";
-import { IFreelancer } from "../types";
+import api from '../api';
+import { useRequestsStore } from './requests';
+import { IFreelancer } from '../types';
 
-export const useFreelancerStore = defineStore("freelancers", {
+export const useFreelancerStore = defineStore('freelancers', {
   state: () => {
     return {
       selectedFreelancer: {} as IFreelancer,

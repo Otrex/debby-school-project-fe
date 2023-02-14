@@ -1,10 +1,10 @@
-import { defineStore } from "pinia";
+import { defineStore } from 'pinia';
 
-import api from "../api";
-import { useRequestsStore } from "./requests";
-import { ProposalType, BudgetType, RateType, IRecommendedJob } from "../types";
+import api from '../api';
+import { useRequestsStore } from './requests';
+import { ProposalType, BudgetType, RateType, IRecommendedJob } from '../types';
 
-export const useFJobsStore = defineStore("freelancerJobs", {
+export const useFJobsStore = defineStore('freelancerJobs', {
   state: () => {
     return {
       recommendedJobsCurrentPage: 0,
@@ -16,9 +16,9 @@ export const useFJobsStore = defineStore("freelancerJobs", {
       proposal: {
         form: {
           type: ProposalType.PAID,
-          coverLetter: "",
-          rateType: "",
-          rate: "",
+          coverLetter: '',
+          rateType: '',
+          rate: '',
         },
       },
     };
@@ -55,9 +55,9 @@ export const useFJobsStore = defineStore("freelancerJobs", {
 
     resetProposalForm() {
       this.proposal.form.type = ProposalType.PAID;
-      this.proposal.form.coverLetter = "";
-      this.proposal.form.rateType = "";
-      this.proposal.form.rate = "";
+      this.proposal.form.coverLetter = '';
+      this.proposal.form.rateType = '';
+      this.proposal.form.rate = '';
     },
 
     async submitProposal(jobId: string) {

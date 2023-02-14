@@ -1,9 +1,9 @@
-import { defineStore } from "pinia";
+import { defineStore } from 'pinia';
 
-import api from "../api";
-import { useRequestsStore } from "./requests";
+import api from '../api';
+import { useRequestsStore } from './requests';
 
-export const useWalletStore = defineStore("wallet", {
+export const useWalletStore = defineStore('wallet', {
   state: () => {
     return {
       loadingWallet: true,
@@ -32,7 +32,7 @@ export const useWalletStore = defineStore("wallet", {
     async getWallet() {
       const requestsStore = useRequestsStore();
       const endRequest = requestsStore.startRequest();
-      
+
       try {
         this.loadingWallet = true;
         const res = await api.getWallet();

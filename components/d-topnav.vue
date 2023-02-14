@@ -157,6 +157,6 @@ const props = defineProps({
 });
 
 function logout() {
-  router.replace("/");
+  router.replace('/');
 }
 </script>
